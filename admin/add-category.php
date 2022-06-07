@@ -13,7 +13,7 @@
       }
     ?>
 
-    <form action="" method="post">
+    <form action="" method="POST" enctype='multipart/form-data'>
 
       <table class="tbl-30">
         <tr>
@@ -21,17 +21,21 @@
           <td><input type="text" name="title" placeholder="Category title"></td>
         </tr>
         <tr>
+          <td>Image</td>
+          <td><input type="file" name="image"></td>
+        </tr>
+        <tr>
           <td>Featured </td>
           <td>
-            <input type="radio" name="featured" value="yes">Yes
-            <input type="radio" name="featured" value="no">No
+            <input type="radio" name="featured" value="Yes">Yes
+            <input type="radio" name="featured" value="No">No
           </td>
         </tr>
         <tr>
           <td>Active</td>
           <td>
-            <input type="radio" name="active" value="yes">Yes
-            <input type="radio" name="active" value="no">No
+            <input type="radio" name="active" value="Yes">Yes
+            <input type="radio" name="active" value="No">No
           </td>
         </tr>
         <tr>
@@ -54,14 +58,14 @@
         $title = $_POST['title'];
 
         // Check if the featured and active button is active or not
-        if ($_POST['featured'] == "yes") {
+        if (isset($_POST['featured'])) {
           $featured = $_POST['featured'];
         }
         else {
           $featured = "No";
         }
 
-        if ($_POST['active'] == "yes") {
+        if (isset($_POST['active'])) {
           $active = $_POST['active'];
         }
         else {
@@ -69,14 +73,28 @@
         }
 
         //SQL Query to Save the data into the DB
-        $sql = "INSERT INTO tbl_category SET
-        title = $title
-        featured = $featured
-        active = $active
-        ";
-
+         $sql = "INSERT INTO tbl_category SET
+                    title='$title',
+                    featured='$featured',
+                    active='$active'
+                ";
         // Save it in the DB
-        
+
+        $res = mysqli_query($conn, $sql);
+
+        if ($res==true) {
+          $_SESSION['add'] = "<div class='success'>Category Added succesfully</div>";
+
+          // Redirect the page to the manage admin page
+          header("Location:".SITEURL."admin/manage-category.php");
+        }
+        else {
+        // Create a Session Variable to display message
+        $_SESSION['add'] = "<div class='error'>Category not added</div>";
+
+        // Redirect the page to add admin page
+        header("Location:".SITEURL."admin/add-category.php");
+        }
       }
     ?>
 

@@ -4,8 +4,12 @@
         ?>
 
       <!-- Menu sectione end -->
-
-
+        <?php
+          if (isset($_SESSION['add'])) {
+            echo $_SESSION['add'];
+            unset($_SESSION['add']);
+          }
+        ?>
     <!-- Main Section start -->
         <div class="main-content">
           <div class="wrapper">
