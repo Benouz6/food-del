@@ -1,3 +1,5 @@
+
+
 <?php
   include("partials/menu.php")
 ?>
@@ -80,23 +82,22 @@
         // print_r($_FILES['image']);
         // die();
 
-
         if (isset($_FILES['image']['name'])) {
 
           // Name of the image
           $image_name = $_FILES['image']['name'];
 
-
           // Source path
           $source_path = $_FILES['image']['tmp_name'];
 
           // Destination path
-          $destination_path = "/../images/category/".$image_name;
+          $destination_path = "../images/category/".$image_name;
 
-          chmod($destination_path, 0600);
 
           // upload the image
-          $upload = move_uploaded_file($real_source, $destination_path);
+          $upload = move_uploaded_file($source_path, $destination_path);
+
+
 
           // Check if the image is uploaded
           if ($upload == FALSE) {
@@ -149,3 +150,12 @@
 <?php
   include("partials/footer.php")
 ?>
+
+
+
+
+
+
+
+
+
