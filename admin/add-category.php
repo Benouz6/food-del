@@ -86,17 +86,21 @@
           // Name of the image
           $image_name = $_FILES['image']['name'];
 
+          // Auto rename our image with an extension
+          $ext = end(explode('.', $image_name));
+
+          // Rename the image
+          // Using timestamp to have an unique name
+          $image_name = "food_category_".rand(000, 999).'.'.$ext;
 
           // Source path
           $source_path = $_FILES['image']['tmp_name'];
 
           // Destination path
-          $destination_path = "/../images/category/".$image_name;
-
-          chmod($destination_path, 0600);
+          $destination_path = "../images/category/".$image_name;
 
           // upload the image
-          $upload = move_uploaded_file($real_source, $destination_path);
+          $upload = move_uploaded_file($source_path, $destination_path);
 
           // Check if the image is uploaded
           if ($upload == FALSE) {
@@ -123,11 +127,13 @@
                     featured='$featured',
                     active='$active'
                 ";
-        // Save it in the DB
 
+        // Save it in the DB
         $res = mysqli_query($conn, $sql);
 
+
         if ($res==true) {
+          // If it's saved
           $_SESSION['add'] = "<div class='success'>Category Added succesfully</div>";
 
           // Redirect the page to the manage admin page

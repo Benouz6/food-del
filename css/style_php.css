@@ -26,6 +26,10 @@
   color: #ff4757;
 }
 
+img {
+  width: 100px;
+}
+
 /* Menu */
 .menu {
   border-bottom: 1px solid grey;
